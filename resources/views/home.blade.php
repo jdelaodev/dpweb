@@ -8,6 +8,16 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 bg-white overflow-hidden sm:rounded-lg">
             <div class="bg-white overflow-hidden sm:rounded-lg">
+                <form action="#">
+                    <div class="d-flex mt-4 w-100 border rounded-sm">
+                            <div class="flex rounded-l-md w-100">
+                                <input type="text" name="search_term" id="search_term" class="block flex-1 border-0 bg-transparent py-2 px-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6" value="{{ $search_term }}" placeholder="Busqueda...">
+                            </div>
+                            <button type="submit" class="rounded-r-md bg-white px-2.5 text-sm font-semibold text-gray-900 hover:bg-gray-50  border-l">Buscar</button>
+                    </div>
+                </form>
+
+
                 <div class="mx-auto grid grid-cols-1 gap-x-8 gap-y-16 lg:grid-cols-3 p-4">
                     @foreach ($posts as $post)
                         <article class="flex max-w-xl flex-col items-start justify-between py-3">
