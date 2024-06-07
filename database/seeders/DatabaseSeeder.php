@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\PostCategory;
+use App\Models\Role;
+use App\Models\ReactionType;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -18,12 +20,61 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
+        $roles = [
+            ['slug' => 'admin', 'user_readable_name' => 'Admin'],
+            ['slug' => 'editor', 'user_readable_name' => 'Editor'],
+            ['slug' => 'reader', 'user_readable_name' => 'Reader'],
+        ];
+
+        $reaction_types = [
+            ['slug' => 'like', 'user_readable_name' => 'Like'],
+            ['slug' => 'dislike', 'user_readable_name' => 'Dislike'],
+        ];
+
+        foreach ($reaction_types as $reaction) {
+            ReactionType::updateOrCreate(
+                ['slug' => $reaction['slug']],
+                ['user_readable_name' => $reaction['user_readable_name']]
+            );
+        }
+
+        foreach ($roles as $role) {
+            Role::updateOrCreate(
+                ['slug' => $role['slug']],
+                ['user_readable_name' => $role['user_readable_name']]
+            );
+        }
+
+        $db_roles = [
+            'admin' => Role::firstWhere('slug', 'admin'),
+            'editor' => Role::firstWhere('slug', 'editor'),
+            'reader' => Role::firstWhere('slug', 'reader'),
+        ];
+
         $users = [
-            ['name' => 'Test User 1', 'email' => 'test1@example.com', 'password' => 'asdASD123'],
-            ['name' => 'Test User 2', 'email' => 'test2@example.com', 'password' => 'asdASD123'],
-            ['name' => 'Test User 3', 'email' => 'test3@example.com', 'password' => 'asdASD123'],
-            ['name' => 'Test User 4', 'email' => 'test4@example.com', 'password' => 'asdASD123'],
-            ['name' => 'Test User 5', 'email' => 'test5@example.com', 'password' => 'asdASD123'],
+            ['name' => 'Test User 1', 'email' => 'test1@example.com', 'password' => 'asdASD123', 'role_id' => $db_roles['reader']->id],
+            ['name' => 'Test User 2', 'email' => 'test2@example.com', 'password' => 'asdASD123', 'role_id' => $db_roles['reader']->id],
+            ['name' => 'Test User 3', 'email' => 'test3@example.com', 'password' => 'asdASD123', 'role_id' => $db_roles['reader']->id],
+            ['name' => 'Test User 4', 'email' => 'test4@example.com', 'password' => 'asdASD123', 'role_id' => $db_roles['reader']->id],
+            ['name' => 'Test User 5', 'email' => 'test5@example.com', 'password' => 'asdASD123', 'role_id' => $db_roles['reader']->id],
+            [
+                'name' => 'Admin User',
+                'email' => 'admin@example.com',
+                'password' => 'asdASD123',
+                'role_id' => $db_roles['admin']->id,
+            ],
+            [
+                'name' => 'Editor User',
+                'email' => 'editor@example.com',
+                'password' => 'asdASD123',
+                'role_id' => $db_roles['editor']->id,
+            ],
+            [
+                'name' => 'Reader User',
+                'email' => 'reader@example.com',
+                'password' => 'asdASD123',
+                'role_id' => $db_roles['reader']->id,
+            ]
         ];
 
         foreach ($users as $user) {

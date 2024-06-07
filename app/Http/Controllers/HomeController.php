@@ -14,7 +14,6 @@ class HomeController extends Controller
     {
         $search_term = request()->query('search_term');
 
-        
         $posts = Post::With(['user', 'categories'])->where('title', 'LIKE', '%' . $search_term . '%')->orderBy('created_at', 'desc')->get();
         return view('home', compact('posts', 'search_term'));
     }

@@ -15,6 +15,12 @@
                     <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                         {{ __('Inicio') }}
                     </x-nav-link>
+
+                    @if (Auth::user() && in_array(Auth::user()->role->slug, ['admin', 'editor']))
+                        <x-nav-link :href="route('admin.posts')" :active="request()->routeIs('admin.posts')">
+                            {{ __('Gestion de Noticias') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 

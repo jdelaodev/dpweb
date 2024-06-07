@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\Comment;
+use App\Models\ReactionType;
+use App\Models\Reaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -34,32 +38,15 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Post $post)
+    public function show($id)
     {
-        
-    }
+        $post = Post::with('user')->findOrFail($id);
+        $comments = Comment::where('post_id', $id)->with('user')->get();
+        $comments_count = $comments->count();
+        $likes_count = Reaction::where(['reaction_type_id' => ReactionType::where(['slug' => 'like'])->first()->id, 'post_id' => $post->id])->count();
+        $dislikes_count = Reaction::where(['reaction_type_id' => ReactionType::where(['slug' => 'dislike'])->first()->id, 'post_id' => $post->id])->count();
+        $current_user_reaction = Reaction::where(['user_id' => Auth::user()->id, 'post_id' => $post->id])->with(['reaction_type'])->first();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Post $post)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Post $post)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Post $post)
-    {
-        //
+        return view('posts.show', compact('post', 'comments', 'comments_count', 'likes_count', 'dislikes_count', 'current_user_reaction'));
     }
 }
