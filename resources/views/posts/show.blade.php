@@ -48,11 +48,11 @@
                             <span>-</span>
                             <form action="{{ route('posts.reactions.create', $post->id) }}" method="POST" style="display:inline">
                                 @csrf
-                                <button type="submit" name="reaction" value="like" class="border px-2 items-center inline {{ $current_user_reaction && $current_user_reaction->reaction_type->slug == 'like' ? 'bg-blue-700 text-white' : '' }}">
+                                <button type="submit" name="reaction" value="like" class="border px-2 items-center inline disabled:opacity-75 {{ $current_user_reaction && $current_user_reaction->reaction_type->slug == 'like' ? 'bg-blue-700 text-white' : '' }}" :disabled="!Auth::user()">
                                     {{ $likes_count }} Likes
                                 </button>
                                 @method('POST')
-                                <button type="submit" name="reaction" value="dislike" class="border px-2 items-center inline {{ $current_user_reaction && $current_user_reaction->reaction_type->slug == 'dislike' ? 'bg-blue-700 text-white' : '' }}">
+                                <button type="submit" name="reaction" value="dislike" class="border px-2 items-center inline disabled:opacity-75 {{ $current_user_reaction && $current_user_reaction->reaction_type->slug == 'dislike' ? 'bg-blue-700 text-white' : '' }}" :disabled="!Auth::user()">
                                     {{ $dislikes_count }} Dislikes
                                 </button>
                             </form>
@@ -68,7 +68,7 @@
                                             <p class="font-semibold text-gray-900">
                                                 <a href="#">
                                                     <span class="absolute inset-0"></span>
-                                                    {{ Auth::user()->name }}
+                                                    {{ Auth::user() ? Auth::user()->name : 'Desconocido' }}
                                                 </a>
                                             </p>
                                         </div>
@@ -79,15 +79,17 @@
                                         @csrf
 
                                         <div class="mb-4">
-                                            <textarea name="content" id="content" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-4"
-                                                placeholder="Comentario">{{ old('content') }}</textarea>
+                                            <textarea name="content" id="content" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-4 disabled:opacity-75"
+                                                placeholder="Comentario" :disabled="!Auth::user()">{{ old('content') }}</textarea>
                                                 <x-input-error :messages="$errors->get('content')" class="mt-2" />
                                         </div>
 
                                         <div class="d-flex justify-end">
                                             <button type="submit"
-                                                class=" border px-4 py-2 rounded-md ms-100 bg-white">Comentar</button>
+                                                class=" border px-4 py-2 rounded-md ms-100 bg-white disabled:opacity-75" :disabled="!!!Auth::user()">Comentar</button>
                                         </div>
+
+                                        <span class="text-gray-500 {{ Auth::user() ? 'invisible' : '' }}">Debe iniciar sesion para comentar.</span>
                                     </form>
                                 </div>
                             </div>

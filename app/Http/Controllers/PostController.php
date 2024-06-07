@@ -45,7 +45,11 @@ class PostController extends Controller
         $comments_count = $comments->count();
         $likes_count = Reaction::where(['reaction_type_id' => ReactionType::where(['slug' => 'like'])->first()->id, 'post_id' => $post->id])->count();
         $dislikes_count = Reaction::where(['reaction_type_id' => ReactionType::where(['slug' => 'dislike'])->first()->id, 'post_id' => $post->id])->count();
-        $current_user_reaction = Reaction::where(['user_id' => Auth::user()->id, 'post_id' => $post->id])->with(['reaction_type'])->first();
+        $current_user_reaction = null;
+        if (Auth::user())
+        {
+            $current_user_reaction = Reaction::where(['user_id' => Auth::user()->id, 'post_id' => $post->id])->with(['reaction_type'])->first();
+        }
 
         return view('posts.show', compact('post', 'comments', 'comments_count', 'likes_count', 'dislikes_count', 'current_user_reaction'));
     }
