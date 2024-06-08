@@ -66,7 +66,7 @@
                                 <div class="flex items-center">
                                     <div class="relative flex items-center gap-x-3">
                                         @if (Auth::user() && Auth::user()->profile_image)
-                                            <img src="{{ Storage::url($post->user->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
+                                            <img src="{{ Storage::url(Auth::user()->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
                                         @else
                                             <img src="{{ asset('img/default-user-image.png') }}" class="h-10 w-10 rounded-full bg-gray-50">
                                         @endif
@@ -104,7 +104,7 @@
                                     <div class="flex items-center w-full">
                                         <div class="relative flex items-center gap-x-3">
                                             @if ($comment->user->profile_image)
-                                                <img src="{{ Storage::url($post->user->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
+                                                <img src="{{ Storage::url($comment->user->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
                                             @else
                                                 <img src="{{ asset('img/default-user-image.png') }}" class="h-10 w-10 rounded-full bg-gray-50">
                                             @endif
