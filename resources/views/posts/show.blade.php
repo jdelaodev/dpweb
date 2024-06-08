@@ -20,8 +20,11 @@
                             </h2>
                             <div class="flex items-center mt-5">
                                 <div class="relative flex items-center gap-x-3">
-                                    <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt="" class="h-10 w-10 rounded-full bg-gray-50">
+                                    @if ($post->user->profile_image)
+                                        <img src="{{ Storage::url($post->user->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
+                                    @else
+                                        <img src="{{ asset('img/default-user-image.png') }}" class="h-10 w-10 rounded-full bg-gray-50">
+                                    @endif
                                     <div class="text-sm leading-6">
                                         <p class="font-semibold text-gray-900">
                                             <a href="#">
@@ -62,8 +65,11 @@
                             <div class="p-4 bg-gray-100 rounded-t-sm">
                                 <div class="flex items-center">
                                     <div class="relative flex items-center gap-x-3">
-                                        <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                            alt="" class="h-10 w-10 rounded-full bg-gray-50">
+                                        @if (Auth::user() && Auth::user()->profile_image)
+                                            <img src="{{ Storage::url($post->user->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
+                                        @else
+                                            <img src="{{ asset('img/default-user-image.png') }}" class="h-10 w-10 rounded-full bg-gray-50">
+                                        @endif
                                         <div class="text-sm ms-1">
                                             <p class="font-semibold text-gray-900">
                                                 <a href="#">
@@ -97,8 +103,11 @@
                                 <div class="border-l-4 mb-2 border-l-gray-100 p-4">
                                     <div class="flex items-center w-full">
                                         <div class="relative flex items-center gap-x-3">
-                                            <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                                alt="" class="h-10 w-10 rounded-full bg-gray-50">
+                                            @if ($comment->user->profile_image)
+                                                <img src="{{ Storage::url($post->user->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
+                                            @else
+                                                <img src="{{ asset('img/default-user-image.png') }}" class="h-10 w-10 rounded-full bg-gray-50">
+                                            @endif
                                             <div class="text-sm ms-1">
                                                 <p class="font-semibold text-gray-900 text-sm">
                                                     <a href="#">

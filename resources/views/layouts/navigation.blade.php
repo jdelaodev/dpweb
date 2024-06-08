@@ -93,6 +93,16 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                    {{ __('Inicio') }}
+                </x-responsive-nav-link>
+
+                @if (Auth::user() && in_array(Auth::user()->role->slug, ['admin', 'editor']))
+                    <x-responsive-nav-link :href="route('admin.posts')" :active="request()->routeIs('admin.posts')">
+                        {{ __('Gestion de Noticias') }}
+                    </x-responsive-nav-link>
+                @endif
+
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>

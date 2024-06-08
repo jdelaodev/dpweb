@@ -42,7 +42,11 @@
                             <p class="mt-3 line-clamp-3 text-sm leading-6 text-gray-600">{{ $post->content }}</p>
                             </div>
                             <div class="relative mt-3 flex items-center gap-x-4">
-                                <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="h-10 w-10 rounded-full bg-gray-50">
+                                @if ($post->user->profile_image)
+                                    <img src="{{ Storage::url($post->user->profile_image) }}" alt="Profile Image" class="h-10 w-10 rounded-full bg-gray-50">
+                                @else
+                                    <img src="{{ asset('img/default-user-image.png') }}" class="h-10 w-10 rounded-full bg-gray-50">
+                                @endif
                                 <div class="text-sm leading-6">
                                     <p class="font-semibold text-gray-900">
                                     <a href="#">
